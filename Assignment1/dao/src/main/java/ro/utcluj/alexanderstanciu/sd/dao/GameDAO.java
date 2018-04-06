@@ -11,9 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Game;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.GameGateway;
-
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.Game;
+import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.GameGateway;
 /**
  *
  * @author XtraSonic

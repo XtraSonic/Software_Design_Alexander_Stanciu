@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.utcluj.alexanderstanciu.sd.business.Interfaces;
-
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Tournament;
+package ro.utcluj.alexanderstanciu.sd.dao.Interfaces;
 
 /**
  *
  * @author XtraSonic
  */
-public interface TournamentGateway extends GeneralGateway<Tournament> {
-
+public interface LogInValidator {
+    public boolean logIn(String email, String password);
+   
 }

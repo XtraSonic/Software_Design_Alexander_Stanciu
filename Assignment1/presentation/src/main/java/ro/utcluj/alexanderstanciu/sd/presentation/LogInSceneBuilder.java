@@ -13,7 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.LogInValidator;
+import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.LogInValidator;
 
 /**
  *

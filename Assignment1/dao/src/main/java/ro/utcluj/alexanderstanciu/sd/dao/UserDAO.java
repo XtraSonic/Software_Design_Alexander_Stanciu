@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.User;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.UserGateway;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.User;
+import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.UserGateway;
 
 /**
  *

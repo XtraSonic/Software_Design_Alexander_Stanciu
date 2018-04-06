@@ -106,7 +106,7 @@ public class Mediator extends Application {
         
     }
     
-   
+
 
     void createTournament(String name, LocalDate date, int prize)
     {

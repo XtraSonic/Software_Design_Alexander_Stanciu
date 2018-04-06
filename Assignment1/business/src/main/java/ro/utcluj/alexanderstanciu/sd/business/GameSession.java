@@ -6,8 +6,8 @@
 package ro.utcluj.alexanderstanciu.sd.business;
 
 import java.util.List;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Game;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.GameGateway;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.Game;
+import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.GameGateway;
 
 /**
  *

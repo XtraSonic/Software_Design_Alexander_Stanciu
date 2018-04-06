@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.utcluj.alexanderstanciu.sd.business.Interfaces;
+package ro.utcluj.alexanderstanciu.sd.dao.Interfaces;
 
 import java.util.List;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.User;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.User;
 
 /**
  *

@@ -6,9 +6,9 @@
 package ro.utcluj.alexanderstanciu.sd.business;
 
 import java.util.Base64;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.User;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.UserGateway;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.LogInValidator;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.User;
+import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.UserGateway;
+import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.LogInValidator;
 
 /**
  *

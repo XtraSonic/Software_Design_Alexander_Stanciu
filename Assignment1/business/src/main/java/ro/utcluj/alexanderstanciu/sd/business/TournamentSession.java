@@ -7,8 +7,8 @@ package ro.utcluj.alexanderstanciu.sd.business;
 
 import java.time.LocalDate;
 import java.util.List;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Tournament;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.TournamentGateway;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.Tournament;
+import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.TournamentGateway;
 
 /**
  *

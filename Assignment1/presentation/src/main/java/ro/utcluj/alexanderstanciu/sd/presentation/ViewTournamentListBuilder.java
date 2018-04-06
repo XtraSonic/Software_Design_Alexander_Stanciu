@@ -22,7 +22,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Tournament;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.Tournament;
 
 /**
  *

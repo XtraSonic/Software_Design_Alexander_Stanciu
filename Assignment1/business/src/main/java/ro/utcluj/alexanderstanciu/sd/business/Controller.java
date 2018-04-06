@@ -8,9 +8,10 @@ package ro.utcluj.alexanderstanciu.sd.business;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Game;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Match;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Tournament;
+
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.Game;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.Match;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.Tournament;
 import ro.utcluj.alexanderstanciu.sd.dao.GameDAO;
 import ro.utcluj.alexanderstanciu.sd.dao.MatchDAO;
 import ro.utcluj.alexanderstanciu.sd.dao.TournamentDAO;

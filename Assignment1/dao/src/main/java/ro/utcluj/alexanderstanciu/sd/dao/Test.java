@@ -6,20 +6,6 @@
  */
 package ro.utcluj.alexanderstanciu.sd.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Game;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Match;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.GameGateway;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.TournamentGateway;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.User;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.UserGateway;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Tournament;
-import ro.utcluj.alexanderstanciu.sd.business.Interfaces.MatchGateway;
-
 /**
  *
  * @author XtraSonic

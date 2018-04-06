@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.utcluj.alexanderstanciu.sd.business.Interfaces;
+package ro.utcluj.alexanderstanciu.sd.dao.Interfaces;
 
 import java.util.List;
-import ro.utcluj.alexanderstanciu.sd.business.Entities.Game;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.Match;
 
 /**
  *
  * @author XtraSonic
  */
-public interface GameGateway extends GeneralGateway<Game> {
-    public List<Game> getGamesInTournament(int id);
+public interface MatchGateway extends GeneralGateway<Match> {
+    public List<Match> findMatchesInGame(int gameId);
 }
