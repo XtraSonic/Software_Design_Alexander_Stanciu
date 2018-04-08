@@ -12,10 +12,10 @@ import java.util.List;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.Game;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.Match;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.Tournament;
-import ro.utcluj.alexanderstanciu.sd.dao.GameDAO;
-import ro.utcluj.alexanderstanciu.sd.dao.MatchDAO;
-import ro.utcluj.alexanderstanciu.sd.dao.TournamentDAO;
-import ro.utcluj.alexanderstanciu.sd.dao.UserDAO;
+import implementation.jdbc.JDBCGameDAO;
+import implementation.jdbc.JDBCMatchDAO;
+import implementation.jdbc.JDBCTournamentDAO;
+import implementation.jdbc.JDBCUserDAO;
 
 /**
  *
@@ -38,10 +38,10 @@ public class Controller {
 
     public Controller()
     {
-        this.tournamentSession = new TournamentSession(new TournamentDAO());
-        this.userSession = new UserSession(new UserDAO());
-        this.gameSession = new GameSession(new GameDAO());
-        this.matchSesion = new MatchSesion(new MatchDAO());
+        this.tournamentSession = new TournamentSession(new JDBCTournamentDAO());
+        this.userSession = new UserSession(new JDBCUserDAO());
+        this.gameSession = new GameSession(new JDBCGameDAO());
+        this.matchSesion = new MatchSesion(new JDBCMatchDAO());
     }
 
     public TournamentSession getTournamentSession()

@@ -62,7 +62,7 @@ class ViewTournamentListBuilder {
                                     + " -- "
                                     + t.getDate().toString()
                                     + " -- "
-                                    + t.getPrize_pool());
+                                    + t.getPrizePool());
             buttonLabel.setOnMouseClicked(e ->
             {
                 mediator.doAfterTournamentSelect(t.getId());

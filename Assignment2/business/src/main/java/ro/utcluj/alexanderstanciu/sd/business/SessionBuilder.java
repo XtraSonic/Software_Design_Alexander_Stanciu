@@ -5,8 +5,8 @@
  */
 package ro.utcluj.alexanderstanciu.sd.business;
 
-import ro.utcluj.alexanderstanciu.sd.dao.TournamentDAO;
-import ro.utcluj.alexanderstanciu.sd.dao.UserDAO;
+import implementation.jdbc.JDBCTournamentDAO;
+import implementation.jdbc.JDBCUserDAO;
 
 /**
  *
@@ -15,11 +15,11 @@ import ro.utcluj.alexanderstanciu.sd.dao.UserDAO;
 public class SessionBuilder {
     public static UserSession getUserSession()
     {
-        return new UserSession(new UserDAO());
+        return new UserSession(new JDBCUserDAO());
     }
     
     public static TournamentSession getTournamentSession()
     {
-        return new TournamentSession(new TournamentDAO());
+        return new TournamentSession(new JDBCTournamentDAO());
     }
 }

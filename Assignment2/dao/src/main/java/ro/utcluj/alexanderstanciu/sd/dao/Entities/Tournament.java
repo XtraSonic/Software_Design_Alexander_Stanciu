@@ -5,34 +5,97 @@
  */
 package ro.utcluj.alexanderstanciu.sd.dao.Entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
+import javax.persistence.*;
 
 /**
  *
  * @author XtraSonic
  */
-public class Tournament {
+@Entity
+@Table(name = "tournament")
+public class Tournament implements Serializable {
 
-    public static int UNSET_ID = -1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-    private int id = UNSET_ID;
+    @Column(name = "name")
     private String name;
-    private LocalDate date;
-    private int prize_pool;
 
-    public Tournament(int id, String name, LocalDate date, int prize_pool)
+    @Column(name = "start_date")
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate startDate;
+
+    @Column(name = "prize_pool")
+    private int prizePool;
+
+    @Column(name = "fee")
+    private int fee;
+
+    @OneToMany(mappedBy = "tournament")
+    private Set<Game> games;
+
+    @ManyToMany(targetEntity = User.class, cascade =
+        {
+            CascadeType.ALL
+    })
+    @JoinTable(name = "player_in_tournament",
+               joinColumns =
+               {
+                   @JoinColumn(name = "tournament_id")
+               },
+               inverseJoinColumns =
+               {
+                   @JoinColumn(name = "user_id")
+               })
+    private Set<User> participants;
+
+    public Tournament()
     {
-        this.id = id;
-        this.name = name;
-        this.date = date;
-        this.prize_pool = prize_pool;
     }
 
-    public Tournament(String name, LocalDate date, int prize_pool)
+    public Tournament(int newId, String name, LocalDate date, int prize_pool)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public void setName(String name)
     {
         this.name = name;
-        this.date = date;
-        this.prize_pool = prize_pool;
+    }
+
+    public void setStartDate(LocalDate startDate)
+    {
+        this.startDate = startDate;
+    }
+
+    public void setPrizePool(int prizePool)
+    {
+        this.prizePool = prizePool;
+    }
+
+    public void setFee(int fee)
+    {
+        this.fee = fee;
+    }
+
+    public void setGames(Set<Game> games)
+    {
+        this.games = games;
+    }
+
+    public void setParticipants(Set<User> participants)
+    {
+        this.participants = participants;
     }
 
     public int getId()
@@ -45,15 +108,35 @@ public class Tournament {
         return name;
     }
 
-    public LocalDate getDate()
+    public LocalDate getStartDate()
     {
-        return date;
+        return startDate;
     }
 
-    public int getPrize_pool()
+    public int getPrizePool()
     {
-        return prize_pool;
+        return prizePool;
     }
-    
-    
+
+    public int getFee()
+    {
+        return fee;
+    }
+
+    public Set<Game> getGames()
+    {
+        return games;
+    }
+
+    public Set<User> getParticipants()
+    {
+        return participants;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Tournament{" + "id=" + id + ", name=" + name + ", startDate=" + startDate.toString() + ", prizePool=" + prizePool + ", fee=" + fee + '}';
+    }
+
 }

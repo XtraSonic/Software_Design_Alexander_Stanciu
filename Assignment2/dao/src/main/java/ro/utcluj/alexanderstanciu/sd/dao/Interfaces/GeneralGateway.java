@@ -22,4 +22,6 @@ public interface GeneralGateway<T> {
     public T findById(int id);
 
     public List<T> findAll();
+    
+    public void closeConnection();
 }

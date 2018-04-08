@@ -5,32 +5,38 @@
  */
 package ro.utcluj.alexanderstanciu.sd.dao.Entities;
 
+import javax.persistence.*;
+
 /**
  *
  * @author XtraSonic
  */
+@Entity
+@Table(name = "pingpong_match")
 public class Match {
-    
-    public static int UNSET_ID = -1;
 
-    private int id = UNSET_ID;
-    private int game_id;
-    private int player1_score;
-    private int player2_score;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-    public Match(int game_id, int player1_score, int player2_score)
+    @ManyToOne
+    @JoinColumn(name="game_id", nullable=false)
+    private Game game;
+
+    @Column(name = "player1_score")
+    private int player1Score;
+
+    @Column(name = "player2_score")
+    private int player2Score;
+
+    public Match()
     {
-        this.game_id = game_id;
-        this.player1_score = player1_score;
-        this.player2_score = player2_score;
     }
 
-    public Match(int id, int game_id, int player1_score, int player2_score)
+    public Match(int newId, int game_id, int player1_score, int player2_score)
     {
-        this.id = id;
-        this.game_id = game_id;
-        this.player1_score = player1_score;
-        this.player2_score = player2_score;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getId()
@@ -38,33 +44,51 @@ public class Match {
         return id;
     }
 
-    public int getGame_id()
+    public Game getGame()
     {
-        return game_id;
+        return game;
     }
 
-    public int getPlayer1_score()
+    @Override
+    public String toString()
     {
-        return player1_score;
+        return "Match{" + "id=" + id + ", game=" + game + ", player1Score=" + player1Score + ", player2Score=" + player2Score + '}';
     }
 
-    public int getPlayer2_score()
+    public int getPlayer1Score()
     {
-        return player2_score;
+        return player1Score;
     }
 
-    public void setPlayer1_score(int player1_score)
+    public int getPlayer2Score()
     {
-        if(player1_score>0)
-            this.player1_score = player1_score;
+        return player2Score;
     }
 
-    public void setPlayer2_score(int player2_score)
+    public void setId(int id)
     {
-        if(player2_score>0)
-            this.player2_score = player2_score;
+        this.id = id;
     }
-    
-    
+
+    public void setGame(Game game)
+    {
+        this.game = game;
+    }
+
+    public void setPlayer1Score(int player1Score)
+    {
+        this.player1Score = player1Score;
+    }
+
+    public void setPlayer2Score(int player2Score)
+    {
+        this.player2Score = player2Score;
+    }
+
+    public int getGameId()
+    {
+        return game.getId();
+    }
+
     
 }

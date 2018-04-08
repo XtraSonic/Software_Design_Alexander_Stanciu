@@ -6,45 +6,48 @@
 package ro.utcluj.alexanderstanciu.sd.dao.Entities;
 
 import java.util.Base64;
+import java.util.Set;
+import javax.persistence.*;
 
 /**
  *
  * @author XtraSonic
  */
+@Entity
+@Table(name = "user")
 public class User {
 
-    public static int UNSET_ID = -1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-    private int id = UNSET_ID;
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "is_admin")
     private boolean isAdmin = false;
+    
+    @Column(name = "money")
+    private int money;
+    
+    
+    @OneToMany(mappedBy="player1")
+    private Set<Game> gamesAsPlayer1;
+    
+    @OneToMany(mappedBy="player2")
+    private Set<Game> gamesAsPlayer2;
 
-    public User(int id, String email, String password, boolean isAdmin)
+    public User()
     {
-
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.isAdmin = isAdmin;
-
     }
 
-    public User(String email, String password, boolean isAdmin)
+    public User(int newId, String email, String password, boolean _admin)
     {
-        this.email = email;
-        this.password = password;
-        this.isAdmin = isAdmin;
-    }
-
-    public final void setPassword(String password)
-    {
-        this.password = new String(Base64.getEncoder().encode(password.getBytes()));
-    }
-
-    private String getPlainPassword()
-    {
-        return password; 
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getId()
@@ -62,12 +65,29 @@ public class User {
         return password;
     }
 
+    public boolean getIsAdmin()
+    {
+        return isAdmin;
+    }
+
+    public int getMoney()
+    {
+        return money;
+    }
+
+    public Set<Game> getGamesAsPlayer1()
+    {
+        return gamesAsPlayer1;
+    }
+
+    public Set<Game> getGamesAsPlayer2()
+    {
+        return gamesAsPlayer2;
+    }
+
     public void setId(int id)
     {
-        if (this.id == UNSET_ID && id > 0)
-        {
-            this.id = id;
-        }
+        this.id = id;
     }
 
     public void setEmail(String email)
@@ -75,20 +95,37 @@ public class User {
         this.email = email;
     }
 
-    public boolean getIsAdmin()
+    public void setPassword(String password)
     {
-        return this.isAdmin;
+        this.password = password;
     }
 
-    public String getName()
+    public void setIsAdmin(boolean isAdmin)
     {
-        return email;
+        this.isAdmin = isAdmin;
     }
-    
+
+    public void setMoney(int money)
+    {
+        this.money = money;
+    }
+
+    public void setGamesAsPlayer1(Set<Game> gamesAsPlayer1)
+    {
+        this.gamesAsPlayer1 = gamesAsPlayer1;
+    }
+
+    public void setGamesAsPlayer2(Set<Game> gamesAsPlayer2)
+    {
+        this.gamesAsPlayer2 = gamesAsPlayer2;
+    }
+
     @Override
     public String toString()
     {
-        return "User{" + "id=" + id + ", email=" + email + ", password=" + password + ", isAdmin=" + isAdmin + '}';
+        return "User{" + "id=" + id + ", email=" + email + ", password=" + password + ", isAdmin=" + isAdmin + ", money=" + money + '}';
     }
+
+    
 
 }
