@@ -21,9 +21,9 @@ public class HibernateMatchDAO implements MatchGateway {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    public HibernateMatchDAO()
+    public HibernateMatchDAO(SessionFactory sessionFactory)
     {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        this.sessionFactory = sessionFactory;
     }
     
     @Override
@@ -87,9 +87,4 @@ public class HibernateMatchDAO implements MatchGateway {
         return matchList;
     }
 
-    @Override
-    public void closeConnection()
-    {
-        sessionFactory.close();
-    }
 }

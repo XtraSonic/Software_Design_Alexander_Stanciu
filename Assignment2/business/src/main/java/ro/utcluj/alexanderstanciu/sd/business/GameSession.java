@@ -6,6 +6,7 @@
 package ro.utcluj.alexanderstanciu.sd.business;
 
 import java.util.List;
+import java.util.Observable;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.Game;
 import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.GameGateway;
 
@@ -13,26 +14,26 @@ import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.GameGateway;
  *
  * @author XtraSonic
  */
-public class GameSession {
+public class GameSession extends Observable{
     private GameGateway gateway;
     private Game game;
     private List<GameDetails> gameDetailList;
-    private int currentTournamentId;
-
+    
     public GameSession(GameGateway gateway)
     {
+        super();
         this.gateway = gateway;
     }
     
     public List<Game> getAllTournamentGames(int tournamentId)
     {
-        currentTournamentId = tournamentId;
         return gateway.getGamesInTournament(tournamentId);
     }
 
     public void setGameById(int id)
     {
         game = gateway.findById(id);
+        setChanged();
     }
 
     public int getGameId()
@@ -43,6 +44,7 @@ public class GameSession {
     public void setGameDetailList(List<GameDetails> result)
     {
         this.gameDetailList = result;
+        setChanged();
     }
     
     public List<GameDetails> getGameDetailsList()
@@ -83,9 +85,9 @@ public class GameSession {
         
     }
 
-    public int getCurrentTournamentId()
+    public int getCurrentGameTournamentId()
     {
-        return currentTournamentId;
+        return game.getTournamentId();
     }
 
     public Game getGame()
@@ -99,6 +101,7 @@ public class GameSession {
         {
             return false;
         }
+        setChanged();
         return getCurrentGameDetails().incrementScore(winner);
     }
     

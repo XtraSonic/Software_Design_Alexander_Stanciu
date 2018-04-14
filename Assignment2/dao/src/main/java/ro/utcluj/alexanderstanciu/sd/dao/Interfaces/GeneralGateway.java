@@ -23,5 +23,4 @@ public interface GeneralGateway<T> {
 
     public List<T> findAll();
     
-    public void closeConnection();
 }

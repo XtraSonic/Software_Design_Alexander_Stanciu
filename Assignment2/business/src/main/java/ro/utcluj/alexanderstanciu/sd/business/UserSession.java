@@ -6,6 +6,7 @@
 package ro.utcluj.alexanderstanciu.sd.business;
 
 import java.util.Base64;
+import java.util.Observable;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.User;
 import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.UserGateway;
 import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.LogInValidator;
@@ -14,12 +15,13 @@ import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.LogInValidator;
  *
  * @author XtraSonic
  */
-public class UserSession implements LogInValidator{
+public class UserSession extends Observable implements LogInValidator{
     private UserGateway gateway;
     private User user;
     
     public UserSession(UserGateway gateway)
     {
+        super();
         this.gateway = gateway;
     }
     
@@ -35,6 +37,7 @@ public class UserSession implements LogInValidator{
         if(decryptedPassword.equals(password))
         {
             this.user= u;
+            setChanged();
             return true;
         }
         return false;
@@ -50,16 +53,27 @@ public class UserSession implements LogInValidator{
         return new String(Base64.getDecoder().decode(s.getBytes()));
     }
     
+    private String encodePassword(String s)
+    {
+        return new String(Base64.getEncoder().encode(s.getBytes()));
+    }
+    
     public User getUserById(int id)
     {
         return gateway.findById(id);
     }
 
-    void createNewUser(String email, String password, boolean admin)
+    public void createNewUser(String email, String password, boolean admin)
     {
         User u = new User(email, password, admin);
-        u.setPassword(password);
+        u.setPassword(encodePassword(password));
         gateway.insert(u);
+    }
+    
+    public String getUserNameById(int id)
+    {
+        User u =getUserById(id);
+        return u.getEmail();
     }
     
 }

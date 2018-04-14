@@ -45,9 +45,21 @@ public class User {
     {
     }
 
-    public User(int newId, String email, String password, boolean _admin)
+    public User(int newId, String email, String password, boolean isAdmin)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.id = newId;
+        this.email=email;
+        this.password=password;
+        this.isAdmin = isAdmin;
+        this.money = 0;
+    } 
+    
+    public User(String email, String password, boolean isAdmin)
+    {
+        this.email=email;
+        this.password=password;
+        this.isAdmin = isAdmin;
+        this.money = 0;
     }
 
     public int getId()

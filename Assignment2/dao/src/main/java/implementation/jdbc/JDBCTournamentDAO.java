@@ -189,12 +189,5 @@ public class JDBCTournamentDAO implements TournamentGateway {
         return tournamentList;
     }
 
-    @Override
-    public void closeConnection()
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-        //TODO
-    }
-    
     
 }

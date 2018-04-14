@@ -20,11 +20,11 @@ import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.UserGateway;
  */
 public class HibernateUserDAO implements UserGateway {
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
 
-    public HibernateUserDAO()
+    public HibernateUserDAO(SessionFactory session)
     {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        this.sessionFactory = session;
     }
 
     @Override
@@ -89,10 +89,4 @@ public class HibernateUserDAO implements UserGateway {
         return userList;
     }
 
-    @Override
-    public void closeConnection()
-    {
-        sessionFactory.close();
-        StandardServiceRegistryBuilder.destroy(sessionFactory.getSessionFactoryOptions().getServiceRegistry());
-    }
 }

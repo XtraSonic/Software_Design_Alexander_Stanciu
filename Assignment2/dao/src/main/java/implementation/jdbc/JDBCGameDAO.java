@@ -228,11 +228,4 @@ public class JDBCGameDAO implements GameGateway {
         }
         return gameList;
     }
-
-    @Override
-    public void closeConnection()
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-        //TODO
-    }
 }

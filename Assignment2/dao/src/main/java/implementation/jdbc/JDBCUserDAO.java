@@ -223,11 +223,5 @@ public class JDBCUserDAO implements UserGateway {
         return user;
     }
 
-    @Override
-    public void closeConnection()
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-        //TODO
-    }
 
 }

@@ -17,7 +17,7 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class HibernateUtil {
      private static final String CONFIG_FILE_NAME = "hibernate.cfg.xml";
-    private static SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory = null;
 
     private static SessionFactory buildSessionFactory()
     {
@@ -38,7 +38,13 @@ public class HibernateUtil {
 
     public static SessionFactory getSessionFactory()
     {
-        if (sessionFactory == null || sessionFactory.isClosed())
+        if(sessionFactory == null )
+        {
+            System.err.println("qwe");
+            sessionFactory = buildSessionFactory();
+        }
+        
+        if (sessionFactory.isClosed())
             sessionFactory = buildSessionFactory();
         return sessionFactory;
     }

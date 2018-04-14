@@ -63,6 +63,15 @@ public class Tournament implements Serializable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public Tournament(String name, LocalDate date, int fee)
+    {
+        this.name =name;
+        this.startDate=date;
+        this.fee = fee;
+    }
+    
+    
+
     public void setId(int id)
     {
         this.id = id;

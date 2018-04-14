@@ -22,11 +22,11 @@ public class HibernateTournamentDAO implements TournamentGateway {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    public HibernateTournamentDAO()
+    public HibernateTournamentDAO(SessionFactory sessionFactory)
     {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        this.sessionFactory = sessionFactory;
     }
-    
+
     @Override
     public int insert(Tournament object)
     {
@@ -78,12 +78,5 @@ public class HibernateTournamentDAO implements TournamentGateway {
         List<Tournament> tournamentList = query.list();
         transaction.commit();
         return tournamentList;
-    }
-
-    @Override
-    public void closeConnection()
-    {
-        sessionFactory.close();
-        StandardServiceRegistryBuilder.destroy(sessionFactory.getSessionFactoryOptions().getServiceRegistry());
     }
 }

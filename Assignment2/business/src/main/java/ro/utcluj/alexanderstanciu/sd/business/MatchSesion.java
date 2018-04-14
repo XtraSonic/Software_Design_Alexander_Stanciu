@@ -6,6 +6,8 @@
 package ro.utcluj.alexanderstanciu.sd.business;
 
 import java.util.List;
+import java.util.Observable;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.Game;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.Match;
 import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.MatchGateway;
 
@@ -13,13 +15,14 @@ import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.MatchGateway;
  *
  * @author XtraSonic
  */
-public class MatchSesion {
+public class MatchSesion extends Observable{
     private MatchGateway gateway;
     private Match match;
     private final int MINIMUM_TO_WIN = 11;
 
     public MatchSesion(MatchGateway gateway)
     {
+        super();
         this.gateway = gateway;
     }
     
@@ -30,8 +33,8 @@ public class MatchSesion {
 
     public int checkWinner(Match m)
     {
-        int pl1score =m.getPlayer1_score();
-        int pl2score =m.getPlayer2_score();
+        int pl1score =m.getPlayer1Score();
+        int pl2score =m.getPlayer2Score();
         if(pl2score<MINIMUM_TO_WIN && pl1score<MINIMUM_TO_WIN)
             return 0;
         else
@@ -51,6 +54,7 @@ public class MatchSesion {
     void setMatchById(int id)
     {
         match = gateway.findById(id);
+        setChanged();
     }
 
     public Match getMatch()
@@ -67,20 +71,22 @@ public class MatchSesion {
     {
         if(player == 1)
         {
-            match.setPlayer1_score(match.getPlayer1_score()+1);
+            match.setPlayer1Score(match.getPlayer1Score()+1);
             gateway.update(match);   
+            setChanged();
         }
         if(player == 2)
         {
-            match.setPlayer2_score(match.getPlayer2_score()+1);
+            match.setPlayer2Score(match.getPlayer2Score()+1);
             gateway.update(match);
+            setChanged();
         }
         return checkWinner(match);
     }
 
-    void createNewMatch()
+    void createNewMatch(Game g)
     {
-        match = new Match(match.getGame_id(), 0, 0);
+        match = new Match(g, 0, 0);
         gateway.insert(match);
     }
     

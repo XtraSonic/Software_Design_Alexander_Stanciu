@@ -6,6 +6,7 @@
 package implementation.hibernate;
 
 import java.util.List;
+import org.hibernate.SessionFactory;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.Tournament;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.User;
 
@@ -14,7 +15,7 @@ import ro.utcluj.alexanderstanciu.sd.dao.Entities.User;
  * @author XtraSonic
  */
 public class Test {
-    public static void main(String[] args)
+    /*public static void main(String[] args)
     {
         HibernateTournamentDAO h = new HibernateTournamentDAO();
         System.out.println("got here ");
@@ -39,5 +40,11 @@ public class Test {
         
         q.closeConnection();
         
+    }*/
+    public static void main(String[] args)
+    {
+        SessionFactory sf = HibernateUtil.getSessionFactory();
+        System.out.println("hello");
+        sf.close();
     }
 }

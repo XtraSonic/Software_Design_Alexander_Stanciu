@@ -226,10 +226,4 @@ public class JDBCMatchDAO implements MatchGateway{
         return pingpong_matchList;
     }
 
-    @Override
-    public void closeConnection()
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-        //TODO
-    }
 }

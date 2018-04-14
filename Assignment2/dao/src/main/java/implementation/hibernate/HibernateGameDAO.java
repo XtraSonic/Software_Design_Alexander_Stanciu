@@ -19,11 +19,11 @@ import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.GameGateway;
  */
 public class HibernateGameDAO implements GameGateway {
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
 
-    public HibernateGameDAO()
+    public HibernateGameDAO(SessionFactory sessionFactory)
     {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        this.sessionFactory = sessionFactory;
     }
     
     @Override
@@ -86,11 +86,5 @@ public class HibernateGameDAO implements GameGateway {
         List<Game> gameList = query.list();
         transaction.commit();
         return gameList;
-    }
-
-    @Override
-    public void closeConnection()
-    {
-        sessionFactory.close();
     }
 }

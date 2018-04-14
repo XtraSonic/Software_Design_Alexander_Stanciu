@@ -34,10 +34,20 @@ public class Match {
     {
     }
 
-    public Match(int newId, int game_id, int player1_score, int player2_score)
+    public Match(Game game, int player1Score, int player2Score)
+    {
+        this.game=game;
+        this.player1Score = player1Score;
+        this.player2Score = player2Score;
+                
+    }
+
+    public Match(int id, int game_id, int player1_score, int player2_score)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
 
     public int getId()
     {

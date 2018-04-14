@@ -41,4 +41,9 @@ public class JdbcGatewayFactory extends DAOFactory {
         return new JDBCMatchDAO();
     }
 
+    @Override
+    public void closeConnection()
+    {
+    }
+
 }
