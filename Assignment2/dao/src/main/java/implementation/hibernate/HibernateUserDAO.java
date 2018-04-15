@@ -32,8 +32,11 @@ public class HibernateUserDAO implements UserGateway {
     {
 
         Session currentSession = sessionFactory.getCurrentSession();
-        Query query = currentSession.createQuery("from User u where u.email = " + email);
+        Transaction transaction = currentSession.beginTransaction();
+        Query query = currentSession.createQuery("from User u where email = :email");
+        query.setParameter("email", email);
         User user = (User) query.uniqueResult();
+        transaction.commit();
         return user;
     }
 

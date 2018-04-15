@@ -14,7 +14,7 @@
          <top>
             <HBox styleClass="root" stylesheets="@../styles/darkTheme.css" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" text="Button" />
+                  <Button mnemonicParsing="false" onAction="#logOut" text="Log Out" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -22,13 +22,13 @@
             </HBox>
          </top>
          <center>
-            <TableView BorderPane.alignment="CENTER">
+            <TableView fx:id="tableView" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn minWidth="200.0" prefWidth="-1.0" text="Name" />
-                <TableColumn minWidth="150.0" prefWidth="-1.0" text="Date" />
-                  <TableColumn minWidth="100.0" prefWidth="-1.0" text="Prize" />
-                  <TableColumn minWidth="100.0" prefWidth="-1.0" text="Fee" />
-                  <TableColumn minWidth="100.0" prefWidth="-1.0" text="Enrolled" />
+                <TableColumn fx:id="nameColumn" minWidth="200.0" prefWidth="-1.0" text="Name" />
+                <TableColumn fx:id="startDateColumn" minWidth="150.0" prefWidth="-1.0" text="Date" />
+                  <TableColumn fx:id="prizeColumn" minWidth="100.0" prefWidth="-1.0" text="Prize" />
+                  <TableColumn fx:id="feeColumn" minWidth="100.0" prefWidth="-1.0" text="Fee" />
+                  <TableColumn fx:id="enrolledColumn" minWidth="100.0" prefWidth="-1.0" text="Enrolled" />
               </columns>
                <BorderPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

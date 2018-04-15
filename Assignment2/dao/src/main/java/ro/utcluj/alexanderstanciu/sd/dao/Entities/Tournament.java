@@ -7,6 +7,7 @@ package ro.utcluj.alexanderstanciu.sd.dao.Entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -16,7 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "tournament")
-public class Tournament implements Serializable {
+public class Tournament {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +40,7 @@ public class Tournament implements Serializable {
     @OneToMany(mappedBy = "tournament")
     private Set<Game> games;
 
-    @ManyToMany(targetEntity = User.class, cascade =
+    @ManyToMany(fetch = FetchType.EAGER,targetEntity = User.class, cascade =
         {
             CascadeType.ALL
     })
@@ -52,7 +53,7 @@ public class Tournament implements Serializable {
                {
                    @JoinColumn(name = "user_id")
                })
-    private Set<User> participants;
+    private List<User> participants;
 
     public Tournament()
     {
@@ -63,6 +64,7 @@ public class Tournament implements Serializable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
     public Tournament(String name, LocalDate date, int fee)
     {
         this.name =name;
@@ -102,7 +104,7 @@ public class Tournament implements Serializable {
         this.games = games;
     }
 
-    public void setParticipants(Set<User> participants)
+    public void setParticipants(List<User> participants)
     {
         this.participants = participants;
     }
@@ -137,15 +139,24 @@ public class Tournament implements Serializable {
         return games;
     }
 
-    public Set<User> getParticipants()
+    public List<User> getParticipants()
     {
         return participants;
     }
 
+    
+    public void addUser(User u)
+    {
+        participants.add(u);
+        u.getUserTournaments().add(this);
+    }
+
+    
     @Override
     public String toString()
     {
         return "Tournament{" + "id=" + id + ", name=" + name + ", startDate=" + startDate.toString() + ", prizePool=" + prizePool + ", fee=" + fee + '}';
     }
 
+    
 }

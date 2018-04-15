@@ -23,6 +23,7 @@ public class ModelController {
     private UserSession userSession;
     private GameSession gameSession;
     private MatchSesion matchSesion;
+    private DAOFactory factory;
 
     private static ModelController singleton = null;
 
@@ -37,7 +38,7 @@ public class ModelController {
 
     private ModelController()
     {
-        DAOFactory factory = DAOFactory.getInstance();
+        factory = DAOFactory.getInstance();
         this.tournamentSession = new TournamentSession(factory.getTournamentGateway());
         this.userSession = new UserSession(factory.getUserGateway());
         this.gameSession = new GameSession(factory.getGameGateway());
@@ -237,5 +238,15 @@ public class ModelController {
     public boolean logIn(String email, String password)
     {
         return userSession.logIn(email, password);
+    }
+    
+    public void close()
+    {
+        factory.closeConnection();
+    }
+
+    public void logOut()
+    {
+        userSession.logOut();
     }
 }

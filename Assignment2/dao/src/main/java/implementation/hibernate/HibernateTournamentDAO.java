@@ -6,12 +6,14 @@
 package implementation.hibernate;
 
 import java.util.List;
+import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.Tournament;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.User;
 import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.TournamentGateway;
 
 /**
@@ -20,7 +22,7 @@ import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.TournamentGateway;
  */
 public class HibernateTournamentDAO implements TournamentGateway {
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
 
     public HibernateTournamentDAO(SessionFactory sessionFactory)
     {
@@ -79,4 +81,17 @@ public class HibernateTournamentDAO implements TournamentGateway {
         transaction.commit();
         return tournamentList;
     }
+
+    @Override
+    public void enrollUserInTournament(User u,Tournament t)
+    {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Transaction transaction = currentSession.beginTransaction();
+        currentSession.update(u);
+        currentSession.update(t);
+        transaction.commit();
+        
+    }
+
+   
 }

@@ -40,7 +40,6 @@ public class HibernateUtil {
     {
         if(sessionFactory == null )
         {
-            System.err.println("qwe");
             sessionFactory = buildSessionFactory();
         }
         

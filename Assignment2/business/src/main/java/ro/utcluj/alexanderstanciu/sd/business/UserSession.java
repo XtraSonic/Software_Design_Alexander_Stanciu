@@ -75,5 +75,11 @@ public class UserSession extends Observable implements LogInValidator{
         User u =getUserById(id);
         return u.getEmail();
     }
+
+    void logOut()
+    {
+        user = null;
+        setChanged();
+    }
     
 }

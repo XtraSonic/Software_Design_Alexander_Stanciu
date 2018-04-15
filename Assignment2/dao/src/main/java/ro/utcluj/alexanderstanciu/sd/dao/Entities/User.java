@@ -6,6 +6,7 @@
 package ro.utcluj.alexanderstanciu.sd.dao.Entities;
 
 import java.util.Base64;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -41,6 +42,10 @@ public class User {
     @OneToMany(mappedBy="player2")
     private Set<Game> gamesAsPlayer2;
 
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "participants")
+    List<Tournament> userTournaments;
+    
+    
     public User()
     {
     }
@@ -136,6 +141,22 @@ public class User {
     public String toString()
     {
         return "User{" + "id=" + id + ", email=" + email + ", password=" + password + ", isAdmin=" + isAdmin + ", money=" + money + '}';
+    }
+
+    public void addTournament(Tournament t)
+    {
+        userTournaments.add(t);
+        t.getParticipants().add(this);
+    }
+
+    public List<Tournament> getUserTournaments()
+    {
+        return userTournaments;
+    }
+
+    public void setUserTournaments(List<Tournament> userTournaments)
+    {
+        this.userTournaments = userTournaments;
     }
 
     

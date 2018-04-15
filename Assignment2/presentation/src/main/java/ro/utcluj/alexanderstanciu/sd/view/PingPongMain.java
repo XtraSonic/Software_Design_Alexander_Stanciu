@@ -16,6 +16,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import ro.utcluj.alexanderstanciu.sd.business.ModelController;
 
 /**
  *
@@ -31,8 +33,13 @@ public class PingPongMain extends Application {
         primaryStage.setTitle("Ping Pong Tournament Manager");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        primaryStage.setOnCloseRequest((WindowEvent event) ->
+        {
+            ModelController.getInstance().close();
+        });
     }
 
+    
     /**
      * @param args the command line arguments
      */
