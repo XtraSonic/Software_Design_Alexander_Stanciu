@@ -31,21 +31,19 @@ public class User {
 
     @Column(name = "is_admin")
     private boolean isAdmin = false;
-    
+
     @Column(name = "money")
     private int money;
-    
-    
-    @OneToMany(mappedBy="player1")
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "player1")
     private Set<Game> gamesAsPlayer1;
-    
-    @OneToMany(mappedBy="player2")
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "player2")
     private Set<Game> gamesAsPlayer2;
 
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "participants")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "participants")
     List<Tournament> userTournaments;
-    
-    
+
     public User()
     {
     }
@@ -53,16 +51,16 @@ public class User {
     public User(int newId, String email, String password, boolean isAdmin)
     {
         this.id = newId;
-        this.email=email;
-        this.password=password;
+        this.email = email;
+        this.password = password;
         this.isAdmin = isAdmin;
         this.money = 0;
-    } 
-    
+    }
+
     public User(String email, String password, boolean isAdmin)
     {
-        this.email=email;
-        this.password=password;
+        this.email = email;
+        this.password = password;
         this.isAdmin = isAdmin;
         this.money = 0;
     }
@@ -159,6 +157,32 @@ public class User {
         this.userTournaments = userTournaments;
     }
 
-    
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (!User.class.isAssignableFrom(obj.getClass()))
+        {
+            return false;
+        }
+        final User other = (User) obj;
+        if ((this.id == 0) ? (other.id != 0) : this.id != other.id)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void addGameP1(Game g)
+    {
+        gamesAsPlayer1.add(g);
+    }
+    public void addGameP2(Game g)
+    {
+        gamesAsPlayer2.add(g);
+    }
 
 }

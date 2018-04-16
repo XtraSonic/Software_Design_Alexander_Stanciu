@@ -6,6 +6,7 @@
 package ro.utcluj.alexanderstanciu.sd.business;
 
 import java.util.Base64;
+import java.util.List;
 import java.util.Observable;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.User;
 import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.UserGateway;
@@ -15,29 +16,31 @@ import ro.utcluj.alexanderstanciu.sd.dao.Interfaces.LogInValidator;
  *
  * @author XtraSonic
  */
-public class UserSession extends Observable implements LogInValidator{
+public class UserSession extends Observable implements LogInValidator {
+
     private UserGateway gateway;
     private User user;
-    
+
     public UserSession(UserGateway gateway)
     {
         super();
         this.gateway = gateway;
     }
-    
+
     @Override
     public boolean logIn(String email, String password)
     {
         User u = gateway.findByEmail(email);
-        if(u == null)
+        if (u == null)
         {
             return false;
         }
         String decryptedPassword = this.decodePassword(u.getPassword());
-        if(decryptedPassword.equals(password))
+        if (decryptedPassword.equals(password))
         {
-            this.user= u;
+            this.user = u;
             setChanged();
+            notifyObservers();
             return true;
         }
         return false;
@@ -47,17 +50,17 @@ public class UserSession extends Observable implements LogInValidator{
     {
         return user;
     }
-    
+
     private String decodePassword(String s)
     {
         return new String(Base64.getDecoder().decode(s.getBytes()));
     }
-    
+
     private String encodePassword(String s)
     {
         return new String(Base64.getEncoder().encode(s.getBytes()));
     }
-    
+
     public User getUserById(int id)
     {
         return gateway.findById(id);
@@ -69,10 +72,10 @@ public class UserSession extends Observable implements LogInValidator{
         u.setPassword(encodePassword(password));
         gateway.insert(u);
     }
-    
+
     public String getUserNameById(int id)
     {
-        User u =getUserById(id);
+        User u = getUserById(id);
         return u.getEmail();
     }
 
@@ -80,6 +83,29 @@ public class UserSession extends Observable implements LogInValidator{
     {
         user = null;
         setChanged();
+        notifyObservers();
     }
-    
+
+    public int getBalance()
+    {
+        if(user == null)
+            return -1;
+        return user.getMoney();
+    }
+
+    List<User> getAllUsers()
+    {
+        return gateway.findAll();
+    }
+
+    void updateMoney(User u, int ammount)
+    {
+        u.setMoney(u.getMoney() + ammount);
+        gateway.update(u);
+        if(user != null)
+            user = getUserById(user.getId());
+        setChanged();
+        notifyObservers();
+    }
+
 }

@@ -7,6 +7,7 @@ package ro.utcluj.alexanderstanciu.sd.view.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +28,7 @@ import ro.utcluj.alexanderstanciu.sd.business.ModelController;
  *
  * @author XtraSonic
  */
-public class LoginController implements Initializable {
+public class LoginController extends ViewController{
 
     @FXML
     private Label errorLabel;
@@ -61,7 +62,7 @@ public class LoginController implements Initializable {
         ModelController mc = ModelController.getInstance();
         if (mc.logIn(emailTextField.getText(), passwordField.getText()))
         {
-            changeSceneToTournamentView(event);
+            changeScene((Node)event.getSource(),"/fxml/TournamentView.fxml");
         }
         else
         {
@@ -75,12 +76,10 @@ public class LoginController implements Initializable {
         errorLabel.setText("");
     }
 
-    private void changeSceneToTournamentView(ActionEvent event) throws IOException
+    @Override
+    public void update(Observable o, Object o1)
     {
-        Parent tournamentsView = FXMLLoader.load(getClass().getResource("/fxml/TournamentView.fxml"));
-        Scene tournamentsViewScene = new Scene(tournamentsView);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(tournamentsViewScene);
-        window.show();
+        
     }
+
 }

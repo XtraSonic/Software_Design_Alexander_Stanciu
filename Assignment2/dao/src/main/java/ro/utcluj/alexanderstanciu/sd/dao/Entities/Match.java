@@ -20,7 +20,7 @@ public class Match {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="game_id", nullable=false)
     private Game game;
 

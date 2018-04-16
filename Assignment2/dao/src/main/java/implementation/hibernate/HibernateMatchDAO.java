@@ -30,9 +30,11 @@ public class HibernateMatchDAO implements MatchGateway {
     public List<Match> findMatchesInGame(int gameId)
     {
         Session currentSession = sessionFactory.getCurrentSession();
+        Transaction transaction = currentSession.beginTransaction();
         Query query = currentSession.createQuery("from Match m where m.game.id= :id");
         query.setLong("id", gameId);
         List<Match> matchList = query.list();
+        transaction.commit();
         return matchList;
     }
 

@@ -8,10 +8,12 @@ package ro.utcluj.alexanderstanciu.sd.business;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 import ro.utcluj.alexanderstanciu.sd.dao.DAOFactory;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.Game;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.Match;
 import ro.utcluj.alexanderstanciu.sd.dao.Entities.Tournament;
+import ro.utcluj.alexanderstanciu.sd.dao.Entities.User;
 
 /**
  *
@@ -22,7 +24,7 @@ public class ModelController {
     private TournamentSession tournamentSession;
     private UserSession userSession;
     private GameSession gameSession;
-    private MatchSesion matchSesion;
+    private MatchSesion matchSession;
     private DAOFactory factory;
 
     private static ModelController singleton = null;
@@ -42,7 +44,7 @@ public class ModelController {
         this.tournamentSession = new TournamentSession(factory.getTournamentGateway());
         this.userSession = new UserSession(factory.getUserGateway());
         this.gameSession = new GameSession(factory.getGameGateway());
-        this.matchSesion = new MatchSesion(factory.getMatchGateway());
+        this.matchSession = new MatchSesion(factory.getMatchGateway());
     }
 
     public TournamentSession getTournamentSession()
@@ -62,7 +64,7 @@ public class ModelController {
 
     public MatchSesion getMatchSesion()
     {
-        return matchSesion;
+        return matchSession;
     }
 
     public List<Tournament> getAllTournaments()
@@ -70,9 +72,19 @@ public class ModelController {
         return tournamentSession.getAllTournaments();
     }
 
+    public List<User> getAllUsers()
+    {
+        return userSession.getAllUsers();
+    }
+
     public void setCurrentTournament(int id)
     {
         tournamentSession.setTournament(id);
+    }
+
+    public void setCurrentTournament(Tournament tournament)
+    {
+        tournamentSession.setTournament(tournament);
     }
 
     public String getCurrentTournamentName()
@@ -138,10 +150,10 @@ public class ModelController {
         int winsP2 = 0;
         int winsP1 = 0;
 
-        List<Match> matches = matchSesion.getMatchesInGame(gameId);
+        List<Match> matches = matchSession.getMatchesInGame(gameId);
         for (Match m : matches)
         {
-            int winner = matchSesion.checkWinner(m);
+            int winner = matchSession.checkWinner(m);
             if (winner == 1)
             {
                 winsP1++;
@@ -164,7 +176,7 @@ public class ModelController {
 
     public List<Match> getMatchFromGame()
     {
-        return matchSesion.getMatchesInGame(gameSession.getGameId());
+        return matchSession.getMatchesInGame(gameSession.getGameId());
     }
 
     public String getCurrentGameName()
@@ -179,20 +191,30 @@ public class ModelController {
         {
             return false;
         }
-        matchSesion.setMatchById(id);
+        matchSession.setMatchById(id);
 
-        if (matchSesion.checkWinner(matchSesion.getMatch()) != 0)
+        //match didn't end already
+        if (matchSession.checkWinner(matchSession.getMatch()) != 0)
         {
             return false;
         }
 
-        int winner = matchSesion.incrementPlayerScore(player);
+        int winner = matchSession.incrementPlayerScore(player);
         if (winner != 0)
         {
             //game not over
             if (!gameSession.updateCurrentGameDetails(winner))
             {
-                matchSesion.createNewMatch(gameSession.getGame());
+                matchSession.createNewMatch(gameSession.getGame());
+            }
+            else
+            {
+                if(gameSession.getCurrentGameDetails().getLevel() == 3)
+                {
+                    userSession.updateMoney(userSession.getUser(), 
+                                            tournamentSession.getTournament()
+                                                    .getPrizePool());
+                }
             }
         }
 
@@ -213,11 +235,14 @@ public class ModelController {
         return 0;
     }
 
-    public void createNewTournament(String name, LocalDate date, int prize)
+    public void createNewTournament(String name, LocalDate date, int fee)
     {
+        if(date.isBefore(LocalDate.now().plusMonths(1)))
+            return;
+        
         if (userSession.getUser().getIsAdmin())
         {
-            tournamentSession.createTournament(name, date, prize);
+            tournamentSession.createTournament(name, date, fee);
         }
     }
 
@@ -239,7 +264,7 @@ public class ModelController {
     {
         return userSession.logIn(email, password);
     }
-    
+
     public void close()
     {
         factory.closeConnection();
@@ -249,4 +274,100 @@ public class ModelController {
     {
         userSession.logOut();
     }
+
+    public void deselectTournament()
+    {
+        tournamentSession.deselectTournament();
+    }
+
+    public void deselectMatch()
+    {
+        matchSession.deselectMatch();
+    }
+
+    public void addMatchObserver(Observer aThis)
+    {
+        matchSession.addObserver(aThis);
+    }
+
+    public void addGameObserver(Observer aThis)
+    {
+        gameSession.addObserver(aThis);
+    }
+
+    public void removeMatchObserver(Observer aThis)
+    {
+        matchSession.deleteObserver(aThis);
+    }
+
+    public void removeGameObserver(Observer aThis)
+    {
+        gameSession.deleteObserver(aThis);
+    }
+
+    public String enroll()
+    {
+        User u = userSession.getUser();
+        if (u == null)
+        {
+            return "No User Selected";
+        }
+        return tournamentSession.enroll(u);
+    }
+
+    public int getUserBalance()
+    {
+        return userSession.getBalance();
+    }
+
+    public boolean isEnrolled(Tournament t)
+    {
+        if (userSession.getUser() == null)
+        {
+            return false;
+        }
+        return tournamentSession.isEnrolled(userSession.getUser(), t);
+    }
+
+    public void updateUserMoney(User u, int ammount)
+    {
+        userSession.updateMoney(u, ammount);
+    }
+
+    public void addUserObserver(Observer aThis)
+    {
+        userSession.addObserver(aThis);
+    }
+
+    public void addTournamentObserver(Observer aThis)
+    {
+        tournamentSession.addObserver(aThis);
+    }
+
+    public boolean hasTournamentEnded(Tournament t)
+    {
+        return t.getGames()
+                .stream()
+                .filter(game -> game.getLevel() == 3)
+                .anyMatch((game) ->
+                {
+                    List<Integer> scores;
+                    scores = getMatchesWonCounts(game.getId());
+                    GameDetails gameDetails = new GameDetails(
+                            game.getId(),
+                            game.getPlayer1().getEmail(),
+                            game.getPlayer2().getEmail(),
+                            scores.get(0),
+                            scores.get(1),
+                            game.getLevel());
+                    return gameDetails.checkEnd();
+                });
+    }
+
+    public void createNewGame(Tournament t, User u1, User u2, int level)
+    {
+        Match m = gameSession.createNewGame(t,u1,u2,level);
+        matchSession.insertNewMatch(m);
+    }
+
 }

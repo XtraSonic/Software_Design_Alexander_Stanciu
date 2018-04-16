@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import javax.persistence.*;
 
 /**
@@ -37,7 +38,7 @@ public class Tournament {
     @Column(name = "fee")
     private int fee;
 
-    @OneToMany(mappedBy = "tournament")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "tournament")
     private Set<Game> games;
 
     @ManyToMany(fetch = FetchType.EAGER,targetEntity = User.class, cascade =
@@ -145,10 +146,22 @@ public class Tournament {
     }
 
     
-    public void addUser(User u)
+    public boolean containsUser(User u)
     {
+        return participants.stream().anyMatch(user->{
+            if(user.equals(u))
+                return true;
+            return false;
+        });
+    }
+    
+    public boolean addUser(User u)
+    {
+        if(containsUser(u))
+            return false;
         participants.add(u);
         u.getUserTournaments().add(this);
+        return true;
     }
 
     
@@ -156,6 +169,12 @@ public class Tournament {
     public String toString()
     {
         return "Tournament{" + "id=" + id + ", name=" + name + ", startDate=" + startDate.toString() + ", prizePool=" + prizePool + ", fee=" + fee + '}';
+    }
+
+
+    public void addGame(Game g)
+    {
+        games.add(g);
     }
 
     

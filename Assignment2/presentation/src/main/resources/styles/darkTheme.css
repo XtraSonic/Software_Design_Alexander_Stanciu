@@ -52,6 +52,7 @@
     -fx-text-fill: linear-gradient(#ffcfcf, #a0a0a0);
 }
 .button:hover {-fx-background-color: linear-gradient(#804400, #252525)}
+.button:focused{-fx-background-color: linear-gradient(#804400, #252525)}
 .button:pressed {
     -fx-background-color: linear-gradient(#704400, #252525);
     -fx-text-fill: linear-gradient(#c0c0c0, #808080);

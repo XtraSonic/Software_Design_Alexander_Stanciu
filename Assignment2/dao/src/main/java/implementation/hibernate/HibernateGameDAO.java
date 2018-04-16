@@ -30,9 +30,11 @@ public class HibernateGameDAO implements GameGateway {
     public List<Game> getGamesInTournament(int id)
     {
         Session currentSession = sessionFactory.getCurrentSession();
+        Transaction transaction = currentSession.beginTransaction();
         Query query = currentSession.createQuery("from Game g where g.tournament.id= :id");
         query.setLong("id", id);
         List<Game> gameList = query.list();
+        transaction.commit();
         return gameList;
 
     }

@@ -99,7 +99,9 @@ public class GameDetails {
         {
             player2Score++;
         }
+        
         return checkEnd();
     }
+    
 
 }

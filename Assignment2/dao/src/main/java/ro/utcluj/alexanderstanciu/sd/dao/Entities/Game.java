@@ -5,6 +5,7 @@
  */
 package ro.utcluj.alexanderstanciu.sd.dao.Entities;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -21,23 +22,23 @@ public class Game {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player1_id", nullable=false)
     private User player1;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player2_id", nullable=false)
     private User player2;
 
     @Column(name = "level")
     private int level;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="tournament_id", nullable=false)
     private Tournament tournament;
 
     
-    @OneToMany(mappedBy="game")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy="game")
     private Set<Match> matches;
     
     public Game()
@@ -57,6 +58,14 @@ public class Game {
     public Game(int newId, int tournament_id, int player1_id, int player2_id, int level)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Game(Tournament t, User u1, User u2, int level)
+    {
+        this.player1 = u1;
+        this.player2 = u2;
+        this.level = level;
+        this.tournament = t;
     }
     
     
@@ -140,6 +149,15 @@ public class Game {
     public String toString()
     {
         return "Game{" + "id=" + id + ", player1=" + player1 + ", player2=" + player2 + ", level=" + level + ", tournament=" + tournament + ", matches=" + matches + '}';
+    }
+
+    public void addMatch(Match m)
+    {
+        if(matches==null)
+        {
+            matches =  new HashSet<>();
+        }
+        matches.add(m);
     }
 
     
