@@ -40,7 +40,7 @@
             </HBox>
             <HBox alignment="CENTER" spacing="10.0" styleClass="root" stylesheets="@../styles/darkTheme.css">
                <children>
-                  <Label text="Create Game:">
+                  <Label minWidth="100.0" text="Create Game:">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -48,8 +48,8 @@
                   <ComboBox fx:id="gameTournamentCB" onAction="#setUsers" />
                   <ComboBox fx:id="gamePlayer1CB" />
                   <ComboBox fx:id="gamePlayer2CB" />
-                  <TextField fx:id="gameLevelTF" promptText="level" />
-                  <Button mnemonicParsing="false" onAction="#createGame" text="Create Tournament" />
+                  <TextField fx:id="gameLevelTF" minWidth="100.0" promptText="level" />
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#createGame" text="Create Tournament" />
                </children>
             </HBox>
          </children>
