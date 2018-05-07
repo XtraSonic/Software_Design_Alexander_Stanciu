@@ -19,7 +19,7 @@ import ro.utcluj.alexanderstanciu.sd.webnews.client.Client;
  *
  * @author XtraSonic
  */
-public class Main extends Application {
+public class ClientMain extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException

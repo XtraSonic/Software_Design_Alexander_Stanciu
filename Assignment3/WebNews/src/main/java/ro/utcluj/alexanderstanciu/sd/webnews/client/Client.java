@@ -11,7 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ro.utcluj.alexanderstanciu.sd.webnews.server.Server;
+import ro.utcluj.alexanderstanciu.sd.webnews.server.ServerMain;
 
 /**
  *
@@ -22,7 +22,7 @@ public class Client {
     private static Client SINGLETON;
 
     private Socket socketClient;
-    private static final int PORT = Server.PORT;
+    private static final int PORT = ServerMain.PORT;
     private static final String ADDRESS = "localhost";
     private ObjectOutputStream output;
     private ObjectInputStream input;

@@ -19,28 +19,28 @@ import java.util.logging.Logger;
  *
  * @author XtraSonic
  */
-public class Server extends Thread implements Observer {
+public class ServerMain extends Thread implements Observer {
 
     public static final int PORT = 4315;
 
-    private static Server SINGELETON;
+    private static ServerMain SINGELETON;
     private final ServerSocket serverSocket;
     private int clientID;
 
     private List<ServerClientHandler> clients;
 
-    private Server() throws IOException
+    private ServerMain() throws IOException
     {
         clientID = 1;
         clients = new LinkedList<>();
         serverSocket = new ServerSocket(PORT);
     }
 
-    public static Server getInstance() throws IOException
+    public static ServerMain getInstance() throws IOException
     {
         if (SINGELETON == null)
         {
-            SINGELETON = new Server();
+            SINGELETON = new ServerMain();
         }
         return SINGELETON;
     }
@@ -67,7 +67,7 @@ public class Server extends Thread implements Observer {
             }
             catch (IOException ex)
             {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ServerMain.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -80,7 +80,7 @@ public class Server extends Thread implements Observer {
         }
         catch (IOException ex)
         {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServerMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -99,15 +99,15 @@ public class Server extends Thread implements Observer {
 
     public static void main(String[] args)
     {
-        Server s;
+        ServerMain s;
         try
         {
-            s = Server.getInstance();
+            s = ServerMain.getInstance();
             s.start();
         }
         catch (IOException ex)
         {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServerMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
